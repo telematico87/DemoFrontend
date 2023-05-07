@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEventListener, useUnmountEffect } from 'primereact/hooks';
 import { classNames, DomHandler } from 'primereact/utils';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef,useState } from 'react';
 import AppFooter from './AppFooter';
 import AppSidebar from './AppSidebar';
 import AppTopbar from './AppTopbar';
@@ -10,10 +10,15 @@ import AppConfig from './AppConfig';
 import { LayoutContext } from './context/layoutcontext';
 import PrimeReact from 'primereact/api';
 
+
 const Layout = (props) => {
+   
     const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
     const topbarRef = useRef(null);
     const sidebarRef = useRef(null);
+
+
+    const [onLogin, setOnLogin] = useState(false);
 
     const router = useRouter();
     const [bindMenuOutsideClickListener, unbindMenuOutsideClickListener] = useEventListener({
@@ -63,6 +68,16 @@ const Layout = (props) => {
     };
 
     useEffect(() => {
+
+        var logged=localStorage.getItem('logged')?true:false;
+        setOnLogin(logged);  
+
+    });
+
+
+
+    useEffect(() => {
+  
         if (layoutState.overlayMenuActive || layoutState.staticMenuMobileActive) {
             bindMenuOutsideClickListener();
         }
@@ -103,7 +118,7 @@ const Layout = (props) => {
     return (
         <React.Fragment>
             <Head>
-                <title>System</title>
+                <title>Sakai by PrimeReact | Free Admin Template for NextJS</title>
                 <meta charSet="UTF-8" />
                 <meta name="description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
                 <meta name="robots" content="index, follow" />
@@ -116,8 +131,7 @@ const Layout = (props) => {
                 <meta property="og:ttl" content="604800"></meta>
                 <link rel="icon" href={`/favicon.ico`} type="image/x-icon"></link>
             </Head>
-
-            <div className={containerClass}>
+             {onLogin && props.simple!='1'? <div className={containerClass}>
                 <AppTopbar ref={topbarRef} />
                 <div ref={sidebarRef} className="layout-sidebar">
                     <AppSidebar />
@@ -128,7 +142,17 @@ const Layout = (props) => {
                 </div>
                 <AppConfig />
                 <div className="layout-mask"></div>
-            </div>
+            </div>:<div >
+               
+           
+                <div className="layout-main-container">
+                    <div className="layout-main">{props.children}</div>
+                    
+                </div>
+               
+                <div className="layout-mask"></div>
+            </div>}
+  
         </React.Fragment>
     );
 };

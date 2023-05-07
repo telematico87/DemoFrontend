@@ -7,15 +7,17 @@ import 'primeicons/primeicons.css';
 import '../styles/layout/layout.scss';
 import '../styles/demo/Demos.scss';
 
+
 export default function MyApp({ Component, pageProps }) {
-
-
+    if (Component.getLayout) {
+        return <LayoutProvider>{Component.getLayout(<Component {...pageProps} />)}</LayoutProvider>;
+    } else {
         return (
             <LayoutProvider>
-                <Layout simple= {Component.simple} {...pageProps} >
+                <Layout>
                     <Component {...pageProps} />
                 </Layout>
             </LayoutProvider>
         );
-    
+    }
 }

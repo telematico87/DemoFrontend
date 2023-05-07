@@ -10,27 +10,28 @@ const AppMenu = () => {
     const model = [
         {
             label: 'Home',
-            items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
+            items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/dashboard' }]
         },
         {
-            label: 'Accesos',
-            icon: 'pi pi-fw pi-briefcase',
-            to: '/pages',
+            label: 'Administrar',
             items: [
-              
-                {
-                    label: 'Login',
-                    icon: 'pi pi-fw pi-user',
-                    to: '/auth/login'
+                { label: 'Usuarios', icon: 'pi pi-fw pi-id-card', to: '/administrar/usuarios' },
+          
+            ]
+        },
+        {
+            label: 'Inventarios',
+            items: [
+     
+            ]
+        },
+        {
+            label: 'Facturación electronica',
+            items: [
                
-                },
-                {
-                    label: 'Mantenedor',
-                    icon: 'pi pi-fw pi-pencil',
-                    to: '/pages/crud'
-                }
             ]
         }
+     
     ];
 
     return (
